@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>Notepad App</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="list-group">
+        <div class="list-group-item note"
+          *ngFor="let note of notes | async"
+          (click)="selectNote(note)"
+          [ngStyle]="{'color': note.color, 'font-size': note.favorite ? '20px': '16px'}"
+          [ngClass]="{'active': selected.id == note.id}"
+        >
+          {{note.title}}
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6" >
+      <div [hidden]="!formShow">
+        <form [formGroup]="editNoteForm" (ngSubmit)="saveNote($event)">
+          <div class="form-group">
+            <label>Title:
+            <input class="note-title form-control" formControlName="title" name="title" required></label>
+            <div class="form-error">Field is required</div>
+          </div>
+          <div class="form-group">
+            <label>Note:
+            <textarea class="note-body form-control" formControlName="body" name="body"></textarea></label>
+          </div>
+          <div class="form-group">
+            <label>favorite:
+            <input type="checkbox" class="note-favorite" formControlName="favorite" name="favorite"></label>
+          </div>
+          <div class="form-group">
+            <label>Color:
+            <input type="color" class="note-color" formControlName="color"  name="color"></label>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success note-save">Save</button>
+          </div>
+        </form>
+      </div>
+
+      <div>
+        Please select note or <a [hidden]="formShow" href="javascript:void(0)" (click)="toggleForm()" class="note-new">click here to create new one</a>
+        <a [hidden]="!formShow" href="javascript:void(0)" (click)="toggleForm()" class="note-new">Close form</a>
+      </div>
+
+    </div>
+  </div>
+</div>
